@@ -1,6 +1,4 @@
 // set up svg
-
-// var margin = {top: 10, right: 20, bottom: 10, left: 20};
 var margin = 50;
 var w = 800;
 var h = 400;
@@ -8,9 +6,9 @@ var h = 400;
 
 
 var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w + 2 * margin)
-						.attr("height", h + 2 * margin);
+            .append("svg")
+            .attr("width", w + 2 * margin)
+            .attr("height", h + 2 * margin);
 						
 
 // get data
