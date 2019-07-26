@@ -1,6 +1,6 @@
 // set up svg
 var margin = 50;
-var w = 800;
+var w = 1200;
 var h = 400;
 
 
@@ -20,13 +20,15 @@ d3.json(url).then(function(data) {
 
   var dataset = data.data;
 
+  var dates = dataset.map(function(d) { return new Date(d[0]); });  // this is return early dates
+console.log(dates);
+  var xScale = d3.scaleTime()
+                 .domain(d3.extent(dates))
+                 .range([0, w]);
+
   var yScale = d3.scaleLinear()
                  .domain([0, d3.max(dataset, (d) => d[1])])
                  .range([h, 0]);  // height
-
-  var xScale = d3.scaleBand()
-
-	
 
   svg.append("g")
         .attr("transform", "translate(" + margin + ", " + margin + ")")
@@ -44,7 +46,9 @@ d3.json(url).then(function(data) {
 
   var yAxis = d3.axisLeft(yScale);
 
-  var xAxis = d3.axisBottom(xscale);
+  var xAxis = d3.axisBottom(xScale);
+
+                
 
   svg.append("text")
     .attr("id", "title")
@@ -60,7 +64,7 @@ d3.json(url).then(function(data) {
 
   svg.append("g")
     .attr("id", "x-axis")
-    .attr("transform", "translate(" + margin + "," + margin + ")")
+    .attr("transform", "translate(" + margin + "," + (h + margin) + ")")
     .call(xAxis);
 
 
