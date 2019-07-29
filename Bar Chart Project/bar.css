@@ -2,6 +2,15 @@ body {
 	background-color: #D3D3D3;
 }
 
+svg {
+	display: block;
+	margin: auto;
+	padding: 25px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 20px;
+	background-color: #ffffff;
+}
+
 .bar {
 	fill: #0074D9;
 }
@@ -10,24 +19,29 @@ body {
 	fill: #7FDBFF;
 }
 
-#title {
-	font-size: 40px;
+.axis {
+	font: 12px 'Bree Serif', serif;
 }
 
-svg {
-	display: block;
-	margin: auto;
-	border-radius: 10px;
-	background-color: #ffffff;
+.axis-label {
+	text-anchor: middle;
+	font: 16px 'Bree Serif', serif;
 }
+
+
+#title {
+	font: 40px 'Bree Serif', serif;
+}
+
+
 
 div#tooltip {	
     position: absolute;			
-    text-align: center;			
-    width: 60px;					
-    height: 28px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
+    text-align: left;			
+    width: 120px;					
+    height: 30px;					
+    padding: 10px;				
+    font: 12px 'Bree Serif', serif;		
     background: lightsteelblue;	
     border: 0px;		
     border-radius: 8px;			
