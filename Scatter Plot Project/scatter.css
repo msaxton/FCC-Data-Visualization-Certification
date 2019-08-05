@@ -9,6 +9,25 @@ svg {
     border-radius: 10px;
     box-shadow: 2px 2px 20px;
     background-color: #ffffff;
+    font: 12px 'Bree Serif', serif;
+}
+
+#data-url: {
+    text-decoration: underline;
+    font: 12px 'Bree Serif', serif;
+
+}
+
+.legend: {
+    font: 12px 'Bree Serif', serif;
+}
+
+a:link {
+    color: #0000FF;
+}
+
+a:visited {
+    color: #800080;
 }
 
 .axis {

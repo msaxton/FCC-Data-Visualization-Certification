@@ -1,15 +1,10 @@
  var url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
 d3.json(url).then(function(data){
-	// data pre-process
-  
-  // get array of years for x-axis, better way to do this?
-  var years = data.map(function(d){
-  	year = d.Year
-  	return year
-  });
 
+	// data pre-process
   var parseMinSec = d3.timeParse("%M:%S");
+
   var formatMinSec = d3.timeFormat("%M:%S");
 
   data.forEach(function(d){
@@ -17,7 +12,8 @@ d3.json(url).then(function(data){
   });
 
   var parseYear = d3.timeParse("%Y");
-  var formatYear = d3.timeFormat("%Y")
+
+  var formatYear = d3.timeFormat("%Y");
 
   data.forEach(function(d){
   	d.Year = parseYear(d.Year);
@@ -27,7 +23,9 @@ d3.json(url).then(function(data){
 
 	// create svg element
 	var w = 900;
+
 	var h = 400;
+  
 	var m = 80;
 
 	var svg = d3.select("body")
@@ -64,7 +62,7 @@ d3.json(url).then(function(data){
               .attr("data-year", " ")
               .style("opacity", 0);
 
-	// fill in data
+	// draw graph
 	svg.append("g")
 	   .attr("id", "graph")
 	   .attr("transform", "translate(" + m + "," + m + ")")
@@ -100,6 +98,7 @@ d3.json(url).then(function(data){
          .style("opacity", 0);
      });
   
+  // append axes
   svg.append("g")
      .attr("id", "x-axis")
      .attr("class", "axis")
@@ -126,12 +125,20 @@ d3.json(url).then(function(data){
      .attr("y", (h + m * 2) / 2)
      .attr("transform", "rotate(-90, 0, " + ((h + m * 2) / 2 - 18.5) +")")  // the 18.5 aligns rotate point
      .text("Time");
-
+  
+  // title
   svg.append("text")
      .attr("id", "title")
      .attr("x", (w + m * 2) / 2)
      .attr("y", m)
      .text("Doping in Professional Cycling");
+
+  // url for data
+  svg.append("text")
+     .attr("id", "data-url")
+     .attr("x", w)
+     .attr("y", (h + m * 2))
+     .html("<a href='https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json'>Data Source</a>");
 
   // legend
   var legendRectSize = 18;
@@ -144,7 +151,7 @@ d3.json(url).then(function(data){
                   .attr('class', 'legend')
                   .attr('transform', function(d, i) {
                     var spacing = 20
-                    var x = w - 18;
+                    var x = w - m - 18;
                     var y = (h / 2) + spacing * i;
                     return 'translate(' + x + ',' + y + ')';  
                   });
