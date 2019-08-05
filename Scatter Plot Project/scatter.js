@@ -74,7 +74,7 @@ d3.json(url).then(function(data){
 	   .append("circle")
 	   .attr("cx", (d) => xScale(d.Year))
 	   .attr("cy", (d) => yScale(d.Time))
-	   .attr("r", 3)
+	   .attr("r", 5)
 	   .style("fill", function(d){
 	   	return color(d.Doping != "");
 	   })
@@ -131,7 +131,7 @@ d3.json(url).then(function(data){
      .attr("id", "title")
      .attr("x", (w + m * 2) / 2)
      .attr("y", m)
-     .text("Some Title");
+     .text("Doping in Professional Cycling");
 
   // legend
   var legendRectSize = 18;

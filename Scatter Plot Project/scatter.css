@@ -16,12 +16,13 @@ svg {
 }
 
 .axis-label {
-    text-anchor: middle;
+    text-anchor: end;
     font: 16px 'Bree Serif', serif;
 }
 
 #title {
     font: 40px 'Bree Serif', serif;
+    text-anchor: middle;
 }
 
 div#tooltip {	
