@@ -1,0 +1,38 @@
+body {
+    background-color: #D3D3D3;
+}
+
+svg {
+    display: block;
+    margin: 45px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 20px;
+    background-color: #ffffff;
+}
+
+.axis {
+    font: 12px 'Bree Serif', serif;
+}
+
+.axis-label {
+    text-anchor: middle;
+    font: 16px 'Bree Serif', serif;
+}
+
+#title {
+    font: 40px 'Bree Serif', serif;
+}
+
+div#tooltip {	
+    position: absolute;			
+    text-align: left;			
+    width: 150px;					
+    height: 75px;					
+    padding: 15px;				
+    font: 12px 'Bree Serif', serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
