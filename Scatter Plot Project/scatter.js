@@ -3,57 +3,48 @@
 d3.json(url).then(function(data){
 
 	// data pre-process
-  var parseMinSec = d3.timeParse("%M:%S");
 
-  var formatMinSec = d3.timeFormat("%M:%S");
-
-  data.forEach(function(d){
-  	d.Time = parseMinSec(d.Time);
-  });
-
-  var parseYear = d3.timeParse("%Y");
-
-  var formatYear = d3.timeFormat("%Y");
+  var formatMinSec = d3.timeFormat("%M:%S");  // to be used later
 
   data.forEach(function(d){
-  	d.Year = parseYear(d.Year);
+    var parsedTime = d.Time.split(":");
+    d.Time = new Date(1970, 0, 1, 0, parsedTime[0], parsedTime[1]);
   });
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 	// create svg element
 	var w = 900;
-
 	var h = 400;
-  
 	var m = 80;
 
 	var svg = d3.select("body")
 	            .append("svg")
 	            .attr("width", (w + m * 2))
 	            .attr("height", (h + m * 2));
-
-	// create scales
-	var xScale = d3.scaleTime()
-	               .range([0, w])
-	               .domain(d3.extent(data, function(d){
-	               	return d.Year;
-	               }))
-	               .nice();
+  
+  var xScale = d3.scaleLinear()
+                 .range([0, w])
+                 .domain([d3.min(data, function(d){
+                          return d.Year - 1;
+                        }),
+                        d3.max(data, function(d){
+                          return d.Year +1;
+                        })]);
 
 	var yScale = d3.scaleTime()
 	               .range([0, h])  // keep smallest time on top
 	               .domain(d3.extent(data, function(d){
 	               	return d.Time;
 	               }))
-	               .nice();
+                 .nice();
 
 	// create axes
-	var xAxis = d3.axisBottom(xScale);
+	var xAxis = d3.axisBottom(xScale)
+                 .tickFormat(d3.format("d"));
 
 	var yAxis = d3.axisLeft(yScale)
 	              .tickFormat(d3.timeFormat("%M:%S"));
-
 
 	// create tool tip
   var div = d3.select("body")
@@ -77,18 +68,18 @@ d3.json(url).then(function(data){
 	   	return color(d.Doping != "");
 	   })
 	   .attr("class", "dot")
-	   .attr("data-xvalue", (d) => formatYear(d.Year))
-	   .attr("data-yvalue", (d) => formatMinSec(d.Time))
+	   .attr("data-xvalue", (d) => d.Year)
+	   .attr("data-yvalue", (d) => d.Time.toISOString())
      // tooltip display
      .on("mouseover", function(d){
       div.transition()
          .duration(200)
          .style("opacity", 0.9);
       div.html(d.Name + ", " + d.Nationality + "<br>" + 
-               "Year: " + formatYear(d.Year) + "<br>" +
+               "Year: " + d.Year + "<br>" +
                "Time: " + formatMinSec(d.Time) + "<br>" +
                d.Doping)
-         .attr("data-year", formatYear(d.Year))
+         .attr("data-year", d.Year)
          .style("left", (d3.event.pageX) + "px")
          .style("top", (d3.event.pageY) + "px");
      })
@@ -102,7 +93,7 @@ d3.json(url).then(function(data){
   svg.append("g")
      .attr("id", "x-axis")
      .attr("class", "axis")
-     .attr("transform", "translate(" + m + "," + (h + m + 5) + ")")
+     .attr("transform", "translate(" + m + "," + (h + m) + ")")
      .call(xAxis);
 
   svg.append("text")
@@ -115,7 +106,7 @@ d3.json(url).then(function(data){
   svg.append("g")
      .attr("id", "y-axis")
      .attr("class", "axis")
-     .attr("transform", "translate(" + (m - 10) + "," + m + ")")
+     .attr("transform", "translate(" + m + "," + m + ")")
      .call(yAxis);
 
   svg.append("text")
@@ -144,27 +135,28 @@ d3.json(url).then(function(data){
   var legendRectSize = 18;
   var legendSpacing = 4;
 
-  var legend = svg.selectAll('.legend')
+  var legend = svg.selectAll(".legend")
                   .data(color.domain())
                   .enter()
-                  .append('g')
-                  .attr('class', 'legend')
-                  .attr('transform', function(d, i) {
+                  .append("g")
+                  .attr("class", "legend")
+                  .attr("id", "legend")
+                  .attr("transform", function(d, i) {
                     var spacing = 20
                     var x = w - m - 18;
                     var y = (h / 2) + spacing * i;
-                    return 'translate(' + x + ',' + y + ')';  
+                    return "translate(" + x + "," + y + ")";  
                   });
 
-  legend.append('rect')
-        .attr('width', legendRectSize)
-        .attr('height', legendRectSize)
-        .style('fill', color)
-        .style('stroke', color);
+  legend.append("rect")
+        .attr("width", legendRectSize)
+        .attr("height", legendRectSize)
+        .style("fill", color)
+        .style("stroke", color);
 
-  legend.append('text')
-        .attr('x', legendRectSize + legendSpacing)
-        .attr('y', legendRectSize - legendSpacing)
+  legend.append("text")
+        .attr("x", legendRectSize + legendSpacing)
+        .attr("y", legendRectSize - legendSpacing)
         .text(function(d){
           console.log((d));
           if (d) {
