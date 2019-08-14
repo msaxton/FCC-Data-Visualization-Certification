@@ -20,7 +20,6 @@ d3.json(url).then(function(data){
 	dataset.forEach(function(d){
 		years.push(d.year);
 	});
-	
 
 	// create svg element
 	var h = 500;
@@ -84,6 +83,11 @@ d3.json(url).then(function(data){
 	   .call(yAxis);
 
 	// title
+	svg.append("text")
+	   .attr("id", "title")
+	   .attr("x", w / 2)
+	   .attr("y", (m.top / 2))
+	   .text("Global Temperatures");
 
 	// description
 
