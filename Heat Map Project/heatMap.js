@@ -14,7 +14,8 @@ d3.json(url).then(function(data){
 
 	var maxTemp = d3.max(temps)
 	var minTemp = d3.min(temps)
-	var tempColors = ["#a50026","#d73027","#f46d43","#fdae61","#fee090","#e0f3f8",                "#abd9e9","#74add1","#4575b4","#313695"];
+	var tempColors = ["#a50026","#d73027","#f46d43","#fdae61","#fee090",
+	                  "#e0f3f8","#abd9e9","#74add1","#4575b4","#313695"];
 
 	var years = [];
 	dataset.forEach(function(d){
@@ -24,7 +25,7 @@ d3.json(url).then(function(data){
 	// create svg element
 	var h = 500;
 	var w = 1200;
-	var m = {top: 30, right: 0, bottom: 50, left: 60};
+	var m = {top: 30, right: 0, bottom: 100, left: 60};
 
 	var svg = d3.select("#chart")
 	            .append("svg")
@@ -89,6 +90,50 @@ d3.json(url).then(function(data){
 	   .attr("y", (m.top / 2))
 	   .text("Global Temperatures");
 
+  // legend
+  var legendWidth = 400;
+  var legendHeight = 30;
+
+  var legendScale = d3.scaleLinear()
+                      .domain([minTemp, maxTemp])
+                      .range([0, legendWidth]);
+
+  var legendAxis = d3.axisBottom(legendScale)
+                     .tickSize(10, 0)
+                     .tickValues(tempScale.domain())
+                     .tickFormat(d3.format(".1f"));
+
+  var legend = svg.append("g")
+                  .attr("id", "legend")
+                  .attr("transform", "translate(" + m.left + "," + (m.top + h + m.bottom - 70) + ")");
+
+  legend.append("g")
+        .selectAll("rect")
+        .data(tempScale.range().map(function(color) {
+        	var d = tempScale.invertExtent(color);
+        	if (d[0] == undefined) d[0] = legendScale.domain()[0];
+        	if (d[1] == undefined) d[1] = legendScale.domain()[1];
+        	return d;
+        }))
+        .enter()
+        .append("rect")
+        .style("fill", function(d, i) {
+        	return tempScale(d[0]);
+        })
+        .attr("x", function(d, i) {
+        	return legendScale(d[0]);
+        })
+        .attr("y", 0)
+        .attr("width", function(d, i) {
+        	return legendScale(d[1]) - legendScale(d[0]);
+        })
+        .attr("height", legendHeight);
+
+  legend.append("g")
+        .attr("transform", "translate(0, " +legendHeight + ")")
+        .call(legendAxis);
+
+
 	// description
 
 	// draw graph
@@ -124,7 +169,6 @@ d3.json(url).then(function(data){
 	   	div.transition()
 	   	   .duration(200)
 	   	   .style("opacity", 0);
-	   // })
 	   });
 
 
