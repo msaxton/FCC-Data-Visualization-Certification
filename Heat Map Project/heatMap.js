@@ -86,9 +86,17 @@ d3.json(url).then(function(data){
 	// title
 	svg.append("text")
 	   .attr("id", "title")
-	   .attr("x", w / 2)
+	   .attr("x", m.left)
 	   .attr("y", (m.top / 2))
 	   .text("Global Temperatures");
+
+	// description
+	svg.append("text")
+	   .attr("id", "description")
+	   .attr("x", (m.left + w))
+	   .attr("y", (m.top / 2))
+	   .style("text-anchor", "end")
+	   .text("Heat Map of Global Temperatures");
 
   // legend
   var legendWidth = 400;
