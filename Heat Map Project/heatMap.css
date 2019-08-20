@@ -1,3 +1,22 @@
+body {
+    background-color: #D3D3D3;
+}
+
+svg {
+    display: block;
+    margin: 45px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 20px;
+    background-color: #ffffff;
+    font: 12px 'Bree Serif', serif;
+}
+
+#title {
+    font-size: 22px;
+    text-anchor: middle;
+}
+
 div#tooltip {	
     position: absolute;			
     text-align: left;			
