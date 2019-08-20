@@ -95,7 +95,7 @@ d3.json(url).then(function(data){
 	// title
 	svg.append("text")
 	   .attr("id", "title")
-	   .attr("x", m.left)
+	   .attr("x", ((m.left + m.right + w) / 2))
 	   .attr("y", (m.top / 2))
 	   .text("Global Temperatures");
 
@@ -103,9 +103,9 @@ d3.json(url).then(function(data){
 	svg.append("text")
 	   .attr("id", "description")
 	   .attr("x", (m.left + w))
-	   .attr("y", (m.top / 2))
+	   .attr("y", (m.top + h + m.bottom - 80))
 	   .style("text-anchor", "end")
-	   .text("Heat Map of Global Temperatures");
+	   .text("Heat Map of Global Temperatures from 1753 to 2015");
 
   // legend
   var legendWidth = 400;
