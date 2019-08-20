@@ -22,10 +22,14 @@ d3.json(url).then(function(data){
 		years.push(d.year);
 	});
 
+	dataset.forEach(function(d) {
+		d.month -= 1;
+		});
+
 	// create svg element
 	var h = 500;
 	var w = 1200;
-	var m = {top: 30, right: 0, bottom: 100, left: 60};
+	var m = {top: 45, right: 0, bottom: 125, left: 75};
 
 	var svg = d3.select("#chart")
 	            .append("svg")
@@ -44,9 +48,14 @@ d3.json(url).then(function(data){
 	               .range([0, w])
 	               .domain(years);
 
-	var yScale = d3.scaleBand()
+	var yScale = d3.scaleBand()  // changed for Jan to be first
 	               .range([0, h]) 
-	               .domain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+	               .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+
+  var values = yScale.domain()  // test
+	values.forEach(function(val){  // test
+		console.log(val, yScale(val));  // test
+	});  // test
 
 	var tempScale = d3.scaleThreshold()
 	                  .domain((function(min, max, count){
@@ -75,7 +84,7 @@ d3.json(url).then(function(data){
                  .tickFormat(function(month){
                  	var date = new Date(0);
                  	date.setUTCMonth(month);
-                 	return d3.timeFormat("%B")(date);
+                 	return d3.utcFormat("%B")(date);
                  });
 
 	svg.append("g")
@@ -113,7 +122,7 @@ d3.json(url).then(function(data){
 
   var legend = svg.append("g")
                   .attr("id", "legend")
-                  .attr("transform", "translate(" + m.left + "," + (m.top + h + m.bottom - 70) + ")");
+                  .attr("transform", "translate(" + m.left + "," + (m.top + h + m.bottom - 80) + ")");
 
   legend.append("g")
         .selectAll("rect")
@@ -125,24 +134,21 @@ d3.json(url).then(function(data){
         }))
         .enter()
         .append("rect")
-        .style("fill", function(d, i) {
-        	return tempScale(d[0]);
-        })
-        .attr("x", function(d, i) {
-        	return legendScale(d[0]);
-        })
+        .style("fill", (d) => tempScale(d[0]))
+        .attr("x", (d) => legendScale(d[0]))
         .attr("y", 0)
-        .attr("width", function(d, i) {
-        	return legendScale(d[1]) - legendScale(d[0]);
-        })
+        .attr("width", (d) => (legendScale(d[1]) - legendScale(d[0])))
         .attr("height", legendHeight);
 
   legend.append("g")
-        .attr("transform", "translate(0, " +legendHeight + ")")
+        .attr("transform", "translate(0, " + legendHeight + ")")
         .call(legendAxis);
 
-
-	// description
+  legend.append("text")
+        .attr("id", "legend-description")
+        .attr("x", 0)
+        .attr("y", (legendHeight + 40))
+        .text("Temperature in Celsius")
 
 	// draw graph
 	svg.append("g")
@@ -158,7 +164,7 @@ d3.json(url).then(function(data){
 	   .attr("data-temp", (d) => baseTemp + d.variance)
 	   .attr("x", (d) => xScale(d.year))
 	   .attr("y", (d) => yScale(d.month))
-	   .attr("width", xScale.bandwidth())
+	   .attr("width", xScale.bandwidth())  
 	   .attr("height", yScale.bandwidth())
 	   .style("fill", (d) => tempScale(baseTemp + d.variance))
 	   // tooltip display
