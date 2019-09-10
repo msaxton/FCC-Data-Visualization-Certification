@@ -127,7 +127,7 @@ function ready(error, education, map) {
                 return obj.fips == d.id;
             });
             if(result[0]){
-                return result[0].area_name + ',' + result[0].state + ': ' + result[0].bachelorsOrHigher + '%'
+                return result[0].area_name + ', ' + result[0].state + ': ' + result[0].bachelorsOrHigher + '%'
             }
             // no matching fips
             return 0
@@ -142,7 +142,7 @@ function ready(error, education, map) {
             // no matching fips
             return 0
         })
-            .style("left", (d3.event.pageX) + "px")
+            .style("left", (d3.event.pageX + 10) + "px")
             .style("top", (d3.event.pageY) + "px")
         })
             .on("mouseout", function(d) {
