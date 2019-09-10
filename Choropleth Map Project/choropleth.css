@@ -1,3 +1,9 @@
+body {
+  display: flex;
+  justify-content: center;
+  font-family: 'Bree Serif', serif;
+}
+
 div#tooltip {	
     position: absolute;			
     text-align: left;			
