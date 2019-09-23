@@ -30,7 +30,7 @@ function sumBySize(d) {
 }
 
 // read data
-dataUrl = "https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/movie-data.json"
+dataUrl = "https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/video-game-sales-data.json"
 
 d3.json(dataUrl).then(function(data){
 
