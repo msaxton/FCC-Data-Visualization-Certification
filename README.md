@@ -6,3 +6,4 @@ Code pen links:
 * [Code pen for scatter plot project](https://codepen.io/msaxton/pen/JgOwbP)
 * [Code pen for heat map project](https://codepen.io/msaxton/pen/XWrdypr)
 * [Code pen for choropleth map project](https://codepen.io/msaxton/pen/JjPLQPv)
+* [Code pen for tree map project](https://codepen.io/msaxton/pen/RwbvGMM)
