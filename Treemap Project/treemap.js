@@ -1,9 +1,8 @@
 // create svg element
-var margin = {top: 50, right: 10, bottom: 10, left:10}
 
-var width = 900
+var width = 1200
 
-var height = 600
+var height = 500
 
 var svg = d3.select("#graph")
             .append("svg")
@@ -21,19 +20,17 @@ var treemap = d3.treemap()
                 .size([width, height])
                 .paddingInner(1);
 
-// add title and other metadata
-
 // color
 var fader = function(color) { return d3.interpolateRgb(color, "#fff")(0.2); },
-    color = d3.scaleOrdinal(d3.schemeCategory10.map(fader)),
-    format = d3.format(",d");
+    color = d3.scaleOrdinal(d3.schemeCategory10.map(fader));
+
 //functions
 function sumBySize(d) {
   return d.value;
 }
 
 // read data
-dataUrl = "https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/kickstarter-funding-data.json"
+dataUrl = "https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/movie-data.json"
 
 d3.json(dataUrl).then(function(data){
 
@@ -89,11 +86,11 @@ d3.json(dataUrl).then(function(data){
 	cell.append("text")
 	    .attr("class", "tile-text")
 	    .selectAll("tspan")
-	    .data( (d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
+	    .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
 	    .enter()
 	    .append("tspan")
-	    .attr("x", 4)  // does this have to be hard coded?
-	    .attr("y", (d, i) => (13 + i * 10)) // hard coded?
+	    .attr("x", 3)
+	    .attr("y", (d, i) => (13 + i * 10))
 	    .text((d) => d);
 
 	// draw legend
@@ -104,7 +101,7 @@ d3.json(dataUrl).then(function(data){
 		return self.indexOf(category) === index;
 	});
 
-	var legendWidth = 500;
+	var legendWidth = 1100;
 	var legendHeight = 500;
 	var legendOffset = 10;
 	var legendRectSize = 15;
@@ -137,6 +134,7 @@ d3.json(dataUrl).then(function(data){
 	           .attr("fill", (d) => color(d));
 
 	  legendElem.append("text")
+	            .attr("class", "legend-text")
 	            .attr("x", legendRectSize + legendTextXOffset)
 	            .attr("y", legendRectSize + legendTextYOffset)
 	            .text((d) => d)

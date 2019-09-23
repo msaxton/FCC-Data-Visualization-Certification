@@ -1,3 +1,33 @@
+body {
+    background-color: #D3D3D3;
+}
+
+h1 {
+    font: 36px 'Bree Serif', serif;
+}
+
+p {
+    font: 16px 'Bree Serif', serif;
+}
+
+.tile-text {
+    font: 10px 'Bree Serif', serif;
+}
+
+.legend-text {
+    font: 14px 'Bree Serif', serif;
+}
+
+div#display {
+    display: block;
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 20px;
+    background-color: #ffffff;
+
+}
+
 div#tooltip {	
     position: absolute;			
     text-align: left;			
